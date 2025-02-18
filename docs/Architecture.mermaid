@@ -1,0 +1,52 @@
+flowchart TB
+    subgraph Client["Client Layer"]
+        direction TB
+        UI["React Frontend"]
+        UI -->|Authentication| Auth["Auth Components"]
+        UI -->|Subscription Management| SubMgmt["Subscription Components"]
+        UI -->|Payment Tracking| PayTrack["Payment Components"]
+        UI -->|Notifications| Notif["Notification Components"]
+    end
+
+    subgraph Server["Server Layer (Flask)"]
+        direction TB
+        API["REST API"]
+        AuthService["Authentication Service"]
+        SubService["Subscription Service"]
+        PaymentService["Payment Service"]
+        NotifService["Notification Service"]
+        
+        API --> AuthService
+        API --> SubService
+        API --> PaymentService
+        API --> NotifService
+    end
+
+    subgraph Database["Database Layer (MongoDB)"]
+        direction TB
+        Users[(Users Collection)]
+        Groups[(Subscription Groups)]
+        Payments[(Payments Collection)]
+        Notifications[(Notifications Collection)]
+    end
+
+    subgraph External["External Services"]
+        EmailService["Email Service"]
+        SMSService["SMS Service"]
+    end
+
+    %% Client to Server Connections
+    Auth -->|REST API| AuthService
+    SubMgmt -->|REST API| SubService
+    PayTrack -->|REST API| PaymentService
+    Notif -->|REST API| NotifService
+
+    %% Server to Database Connections
+    AuthService -->|CRUD Operations| Users
+    SubService -->|CRUD Operations| Groups
+    PaymentService -->|CRUD Operations| Payments
+    NotifService -->|CRUD Operations| Notifications
+
+    %% External Service Connections
+    NotifService -->|Send Notifications| EmailService
+    NotifService -->|Send Notifications| SMSService
