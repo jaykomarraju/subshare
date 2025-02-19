@@ -116,7 +116,7 @@ Subshare is a web application designed to simplify the management and tracking o
 
 ## API Documentation
 
-Refer to the [Subshare API Documentation](#subshare-api-documentation) section in this README for details on available endpoints, request/response formats, and error handling.
+Refer to the [Subshare API Documentation](https://github.com/jaykomarraju/subshare/blob/main/server/API.md) section in this README for details on available endpoints, request/response formats, and error handling.
 
 ## Usage
 
@@ -148,7 +148,3 @@ Refer to the [Subshare API Documentation](#subshare-api-documentation) section i
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
-
-This README provides an overview of Subshare, explains how to set up and run both the backend and frontend, outlines the API, and describes the project structure. Feel free to customize it further to match any additional changes or requirements.
-
-Would you like any further modifications or additional sections in the README?
