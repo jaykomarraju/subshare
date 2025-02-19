@@ -53,7 +53,7 @@ Subshare is a web application designed to simplify the management and tracking o
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/subshare.git
+   git clone https://github.com/jaykomarraju/subshare.git
    cd subshare/server
    ```
 
