@@ -1,31 +1,38 @@
-// src/pages/Dashboard.js
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import SubscriptionCard from '../components/subscriptions/SubscriptionCard';
 import Loader from '../components/common/Loader';
 import { getSubscriptions } from '../api/subscriptions';
 import { Link } from 'react-router-dom';
 
+// const fadeIn = keyframes`
+//   from { opacity: 0; transform: translateY(10px); }
+//   to { opacity: 1; transform: translateY(0); }
+// `;
+
 const Container = styled.div`
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  background-color: #f4f4f4;
-//   height: 100%;
 `;
 
 const Title = styled.h2`
-  text-align: center;
+  font-family: 'Montserrat', sans-serif;
   color: #333;
-  margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
 `;
 
 const Message = styled.p`
+  font-family: 'Roboto', sans-serif;
   text-align: center;
   font-size: 1rem;
   color: #555;
-
+  
   a {
     color: #2196F3;
     text-decoration: none;
@@ -39,10 +46,9 @@ const Message = styled.p`
 const SubscriptionsList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
   max-width: 900px;
-  margin-top: 1rem;
 `;
 
 const ButtonContainer = styled.div`
@@ -51,17 +57,18 @@ const ButtonContainer = styled.div`
 
 const CreateButton = styled(Link)`
   display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  padding: 0.85rem 1.8rem;
+  font-size: 1.1rem;
   color: #fff;
-  background-color: #4CAF50;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%);
+  border-radius: 8px;
   text-decoration: none;
   text-align: center;
-  transition: background 0.3s ease-in-out;
-
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.3s ease;
+  
   &:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #5a72ea 0%, #ea4a67 100%);
   }
 `;
 

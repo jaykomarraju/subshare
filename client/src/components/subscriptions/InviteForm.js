@@ -1,31 +1,38 @@
-// src/components/subscriptions/InviteForm.js
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const slideIn = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
 const FormContainer = styled.div`
   background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 1rem auto;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  margin: 2rem auto;
+  animation: ${slideIn} 0.5s ease-out;
 `;
 
 const Title = styled.h3`
   text-align: center;
   color: #333;
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
 `;
 
 const Message = styled.p`
   text-align: center;
-  font-size: 0.9rem;
-  color: ${(props) => (props.error ? 'red' : 'green')};
+  font-size: 0.95rem;
+  color: ${(props) => (props.error ? '#e74c3c' : '#27ae60')};
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 `;
 
 const FormGroup = styled.div`
@@ -36,18 +43,20 @@ const FormGroup = styled.div`
 const Label = styled.label`
   font-size: 1rem;
   color: #333;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const Input = styled.input`
-  padding: 0.5rem;
+  padding: 0.65rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  font-family: 'Roboto', sans-serif;
 
   &:focus {
-    border-color: #4CAF50;
+    border-color: #6a82fb;
     outline: none;
   }
 `;
@@ -56,18 +65,19 @@ const Button = styled.button`
   padding: 0.75rem;
   font-size: 1rem;
   color: #fff;
-  background-color: #4CAF50;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
-
+  transition: background 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  
   &:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #5a72ea 0%, #ea4a67 100%);
   }
 
   &:disabled {
-    background-color: #ccc;
+    background: #ccc;
     cursor: not-allowed;
   }
 `;
@@ -112,12 +122,12 @@ const InviteForm = ({ onInvite }) => {
 
   return (
     <FormContainer>
-      <Title>Invite Additional Members</Title>
+      <Title>Invite Friends</Title>
       {error && <Message error>{error}</Message>}
       {successMsg && <Message>{successMsg}</Message>}
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label>Emails (comma-separated):</Label>
+          <Label>Emails (comma separated):</Label>
           <Input
             type="text"
             value={inviteesInput}

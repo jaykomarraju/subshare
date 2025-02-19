@@ -1,33 +1,42 @@
-// src/components/profiles/ProfileForm.js
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { getProfile, updateProfile } from '../../api/profile';
 import Loader from '../common/Loader';
 
+const slideIn = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
 const FormContainer = styled.div`
-  background: #fff;
+  background: #ffffffcc;
+  backdrop-filter: blur(4px);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   max-width: 400px;
   margin: 1rem auto;
+  animation: ${slideIn} 0.5s ease-out;
 `;
 
 const Title = styled.h2`
   text-align: center;
   color: #333;
+  margin-bottom: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
 `;
 
 const Message = styled.p`
   text-align: center;
-  font-size: 0.9rem;
-  color: ${(props) => (props.error ? 'red' : 'green')};
+  font-size: 1rem;
+  color: ${(props) => (props.error ? '#e74c3c' : '#27ae60')};
+  margin-bottom: 1rem;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 `;
 
 const FormGroup = styled.div`
@@ -38,38 +47,41 @@ const FormGroup = styled.div`
 const Label = styled.label`
   font-size: 1rem;
   color: #333;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const Input = styled.input`
-  padding: 0.5rem;
+  padding: 0.7rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+  font-family: 'Roboto', sans-serif;
 
   &:focus {
-    border-color: #4CAF50;
+    border-color: #6a82fb;
     outline: none;
   }
 `;
 
 const Button = styled.button`
-  padding: 0.75rem;
-  font-size: 1rem;
+  padding: 0.8rem;
+  font-size: 1.1rem;
   color: #fff;
-  background-color: #4CAF50;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
-
+  transition: background 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  
   &:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #5a72ea 0%, #ea4a67 100%);
   }
-
+  
   &:disabled {
-    background-color: #ccc;
+    background: #ccc;
     cursor: not-allowed;
   }
 `;

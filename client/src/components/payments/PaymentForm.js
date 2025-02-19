@@ -1,33 +1,39 @@
-// src/components/payments/PaymentForm.js
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { logPayment } from '../../api/payments';
+
+const slideUp = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
 const FormContainer = styled.div`
   background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 1rem auto;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  margin: 2rem auto;
+  animation: ${slideUp} 0.5s ease-out;
 `;
 
 const Title = styled.h3`
-  margin-bottom: 1rem;
-  color: #333;
   text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
 `;
 
 const ErrorMessage = styled.p`
-  color: red;
-  font-size: 0.9rem;
+  color: #e74c3c;
+  font-size: 0.95rem;
   text-align: center;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 `;
 
 const FormGroup = styled.div`
@@ -38,32 +44,35 @@ const FormGroup = styled.div`
 const Label = styled.label`
   font-size: 1rem;
   color: #333;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const Input = styled.input`
-  padding: 0.5rem;
+  padding: 0.65rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  font-family: 'Roboto', sans-serif;
 
   &:focus {
-    border-color: #4CAF50;
+    border-color: #6a82fb;
     outline: none;
   }
 `;
 
 const Select = styled.select`
-  padding: 0.5rem;
+  padding: 0.65rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   background: #fff;
-  transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease;
+  font-family: 'Roboto', sans-serif;
 
   &:focus {
-    border-color: #4CAF50;
+    border-color: #6a82fb;
     outline: none;
   }
 `;
@@ -72,18 +81,19 @@ const Button = styled.button`
   padding: 0.75rem;
   font-size: 1rem;
   color: #fff;
-  background-color: #4CAF50;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
-
+  transition: background 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  
   &:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #5a72ea 0%, #ea4a67 100%);
   }
-
+  
   &:disabled {
-    background-color: #ccc;
+    background: #ccc;
     cursor: not-allowed;
   }
 `;
@@ -106,8 +116,15 @@ const PaymentForm = ({ groupId, onPaymentLogged }) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    const payload = { 
+      ...formData, 
+      payer_email: currentUser.email 
+    };
+    
     try {
-      const data = await logPayment(formData);
+      const data = await logPayment(payload);
       setLoading(false);
       if (onPaymentLogged) {
         onPaymentLogged(data.payment);
@@ -120,7 +137,7 @@ const PaymentForm = ({ groupId, onPaymentLogged }) => {
 
   return (
     <FormContainer>
-      <Title>Log a Payment</Title>
+      <Title>Log Payment</Title>
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -152,7 +169,7 @@ const PaymentForm = ({ groupId, onPaymentLogged }) => {
           />
         </FormGroup>
         <Button type="submit" disabled={loading}>
-          {loading ? 'Logging Payment...' : 'Log Payment'}
+          {loading ? 'Logging...' : 'Log Payment'}
         </Button>
       </Form>
     </FormContainer>

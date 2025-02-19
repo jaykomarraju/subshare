@@ -1,50 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { getProfile } from '../api/profile';
 import ProfileForm from '../components/profiles/ProfileForm';
+import Loader from '../components/common/Loader';
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
 const Container = styled.div`
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #f4f4f4;
   padding: 2rem;
 `;
 
 const Title = styled.h2`
-  text-align: center;
+  font-family: 'Montserrat', sans-serif;
   color: #333;
-  margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
 `;
 
 const ProfileDetails = styled.div`
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: #ffffffcc;
+  backdrop-filter: blur(4px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   width: 100%;
   max-width: 400px;
   text-align: center;
 `;
 
 const ProfileItem = styled.p`
-  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
   color: #555;
   margin: 0.5rem 0;
 `;
 
 const EditButton = styled.button`
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  background-color: #007bff;
-  color: white;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%);
+  color: #fff;
   cursor: pointer;
-  border-radius: 4px;
-
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.3s ease;
+  
   &:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #5a72ea 0%, #ea4a67 100%);
   }
 `;
 
@@ -75,19 +87,20 @@ const Profile = () => {
     <Container>
       <Title>Your Profile</Title>
       {isEditing ? (
-        <ProfileForm profile={profile} onSuccess={(updatedProfile) => {
-          setProfile(updatedProfile);
-          setIsEditing(false);
-        }} />
+        <ProfileForm 
+          profile={profile} 
+          onSuccess={(updatedProfile) => {
+            setProfile(updatedProfile);
+            setIsEditing(false);
+          }} 
+        />
       ) : (
         <ProfileDetails>
           <ProfileItem><strong>Name:</strong> {profile.name}</ProfileItem>
           <ProfileItem><strong>Email:</strong> {profile.email}</ProfileItem>
-          <div>
           {profile.profile_picture && (
-            <img src={profile.profile_picture} alt="Profile" width={100} height={100} />
+            <img src={profile.profile_picture} alt="Profile" width={120} height={120} style={{borderRadius: '50%', marginTop: '1rem'}} />
           )}
-          </div>
           <EditButton onClick={() => setIsEditing(true)}>Edit Profile</EditButton>
         </ProfileDetails>
       )}
